@@ -71,4 +71,6 @@ public class LocationRepositoryTests {
 		assertThat(location).isNull(); 
 
 	}
+	
+
 }
