@@ -2,6 +2,8 @@ package com.skyapi.weatherforcast.common;
 
 import java.util.Objects;
 
+import org.hibernate.validator.constraints.Length;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -18,27 +20,32 @@ public class Location {
 	
 	@Column(length=12, nullable = false)
 	@Id
-	@NotBlank
+	@NotNull(message = "Location code cannot be null")
+	@Length(min = 3, max = 12, message = "Location code must have 3-12 characters")
 	private String code;
 	
 	@Column(length=128, nullable = false)
 	@JsonProperty("city_name")
-	@NotBlank
+	@NotNull(message = "City name cannot be null")
+	@Length(min = 3, max = 123, message = "City name code must have 3-123 characters")
 	private String cityName;
 	
 	@Column(length=64, nullable = false)
 	@JsonProperty("country_name")
-	@NotBlank
+	@NotNull(message = "Country name cannot be null")
+	@Length(min = 3, max = 64, message = "City name code must have 3-64 characters")
 	private String countryName;
 	
 	@Column(length=64, nullable = false)
 	@JsonProperty("country_code")
-	@NotBlank
+	@NotNull(message = "Country code cannot be null")
+	@Length(min = 2, max = 2, message = "City name code must have 2 characters")
 	private String countryCode;
 	
 	@Column(length=64, nullable = false)
 	@NotNull
 	@JsonProperty("region_name")
+	@Length(min = 3, max = 128, message = "Region name code must have 3-128 characters")
 	private String regionName;
 	
 	private boolean enabled;
