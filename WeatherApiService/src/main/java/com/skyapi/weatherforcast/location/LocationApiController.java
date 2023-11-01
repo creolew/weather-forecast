@@ -21,43 +21,43 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/v1/locations")
 public class LocationApiController {
-	
+
 	private LocationService service;
 
 	public LocationApiController(LocationService service) {
 		super();
-		this.service = service; 
+		this.service = service;
 	}
-	
+
 	@PostMapping
-	public ResponseEntity<Location> addLocation(@RequestBody @Valid Location location){
+	public ResponseEntity<Location> addLocation(@RequestBody @Valid Location location) {
 		Location addedLocation = service.add(location);
 		URI uri = URI.create("/v1/locations/" + location.getCode());
-		return ResponseEntity.created(uri).body(addedLocation); 
+		return ResponseEntity.created(uri).body(addedLocation);
 	}
-	
+
 	@GetMapping
-	public ResponseEntity<?> listLocations(){
+	public ResponseEntity<?> listLocations() {
 		List<Location> locations = service.list();
-		
-		if(locations.isEmpty()) {
+
+		if (locations.isEmpty()) {
 			return ResponseEntity.noContent().build();
 		}
 		return ResponseEntity.ok(locations);
 	}
-	
+
 	@GetMapping("/{code}")
-	public ResponseEntity<?> getLocation(@PathVariable("code") String code){
+	public ResponseEntity<?> getLocation(@PathVariable("code") String code) {
 		Location location = service.get(code);
-		
-		if(location == null) 
+
+		if (location == null)
 			return ResponseEntity.notFound().build();
-		
+
 		return ResponseEntity.ok(location);
 	}
-	
+
 	@PutMapping
-	public ResponseEntity<?> updateLocation(@RequestBody @Valid Location location){
+	public ResponseEntity<?> updateLocation(@RequestBody @Valid Location location) {
 		try {
 			Location updatedLocation = service.update(location);
 			return ResponseEntity.ok(updatedLocation);
@@ -65,9 +65,9 @@ public class LocationApiController {
 			return ResponseEntity.notFound().build();
 		}
 	}
-	
+
 	@DeleteMapping("/{code}")
-	public ResponseEntity<?> deleteLocation(@PathVariable("code") String code){
+	public ResponseEntity<?> deleteLocation(@PathVariable("code") String code) {
 		try {
 			service.delete(code);
 			return ResponseEntity.noContent().build();
